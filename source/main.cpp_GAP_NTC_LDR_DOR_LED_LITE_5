@@ -1,0 +1,216 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2013 ARM Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include <events/mbed_events.h>
+#include <mbed.h>
+#include <math.h>
+#include "ble/BLE.h"
+
+// Analog Pin
+#define ANALOG_BAT_READ_PIN p4
+#define ANALOG_NTC_READ_PIN p5
+#define ANALOG_LDR_READ_PIN p6
+
+// Digital pin
+#define DIGITAL_DOR_READ_PIN p16
+#define DIGITAL_LED1_WRITE_PIN p8
+
+// Define IO
+DigitalOut  led1(DIGITAL_LED1_WRITE_PIN, 1);
+//DigitalIn digitalDorRead(DIGITAL_DOR_READ_PIN);
+
+AnalogIn analogBatRead(ANALOG_BAT_READ_PIN);
+AnalogIn analogNtcRead(ANALOG_NTC_READ_PIN);
+AnalogIn analogLdrRead(ANALOG_LDR_READ_PIN);
+
+// Define data
+uint16_t batData;
+uint16_t ntcData;
+uint16_t ldrData;
+bool dorData;
+uint16_t cnt;
+
+//Serial pc(PIN_TX, PIN_RX); // tx, rx
+
+// Change your device name below
+const char DEVICE_NAME[] = "my5";
+
+/* We can arbiturarily choose the GAPButton service UUID to be 0xAA00
+ * as long as it does not overlap with the UUIDs defined here:
+ * https://developer.bluetooth.org/gatt/services/Pages/ServicesHome.aspx */
+#define GAPButtonUUID 0x6969
+
+const uint16_t uuid16_list[] = {GAPButtonUUID};
+
+static EventQueue eventQueue(/* event count */ 16 * EVENTS_EVENT_SIZE);
+
+void print_error(ble_error_t error, const char* msg)
+{
+
+}
+
+void updatePayload(void)
+{
+    // Update the count in the SERVICE_DATA field of the advertising payload
+    uint8_t service_data[9];
+    service_data[0] = 0x00;
+    service_data[1] = 0x04;
+    service_data[2] = (uint8_t) ((batData>>8) & 0xff);
+    service_data[3] = (uint8_t) (batData & 0xff);
+    service_data[4] = (uint8_t) ((ntcData>>8) & 0xff);
+	service_data[5] = (uint8_t) (ntcData & 0xff);
+	service_data[6] = (uint8_t) ((ldrData>>8) & 0xff);
+	service_data[7] = (uint8_t) (ldrData & 0xff);
+	service_data[8] = (uint8_t) (dorData & 0xff);
+
+    ble_error_t err = BLE::Instance().gap().updateAdvertisingPayload(GapAdvertisingData::SERVICE_DATA, (uint8_t *)service_data, sizeof(service_data));
+    if (err != BLE_ERROR_NONE) {
+		print_error(err, "Updating payload failed");
+	}
+
+    uint8_t manufacture_data[4];
+	manufacture_data[0] = 0x01;
+	manufacture_data[1] = 0x01;
+	manufacture_data[2] = (uint8_t) ((cnt>>8) & 0xff);
+	manufacture_data[3] = (uint8_t) (cnt & 0xff);
+
+    err = BLE::Instance().gap().updateAdvertisingPayload(GapAdvertisingData::MANUFACTURER_SPECIFIC_DATA, (uint8_t *)manufacture_data, sizeof(manufacture_data));
+    if (err != BLE_ERROR_NONE) {
+        print_error(err, "Updating payload failed");
+    }
+}
+
+void blinkCallback(void)
+{
+    led1 = !led1;
+
+    // Update values
+    ++cnt;
+    batData = analogBatRead.read_u16();
+    ntcData = analogNtcRead.read_u16();
+    ldrData = analogLdrRead.read_u16();
+//    dorData = digitalDorRead.read();
+
+    // Update BLE payload
+    eventQueue.call(updatePayload);
+}
+
+void bleInitComplete(BLE::InitializationCompleteCallbackContext *context)
+{
+    BLE&        ble = context->ble;
+    ble_error_t err = context->error;
+
+    if (err != BLE_ERROR_NONE) {
+        print_error(err, "BLE initialisation failed");
+        return;
+    }
+
+    // Set up the advertising flags. Note: not all combination of flags are valid
+    // BREDR_NOT_SUPPORTED: Device does not support Basic Rate or Enchanced Data Rate, It is Low Energy only.
+    // LE_GENERAL_DISCOVERABLE: Peripheral device is discoverable at any moment
+    err = ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED | GapAdvertisingData::LE_GENERAL_DISCOVERABLE);
+    if (err != BLE_ERROR_NONE) {
+        print_error(err, "Setting GAP flags failed");
+        return;
+    }
+
+    // Put the device name in the advertising payload
+    err = ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LOCAL_NAME, (uint8_t *)DEVICE_NAME, sizeof(DEVICE_NAME));
+    if (err != BLE_ERROR_NONE) {
+        print_error(err, "Setting device name failed");
+        return;
+    }
+
+    err = ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_16BIT_SERVICE_IDS, (uint8_t *)uuid16_list, sizeof(uuid16_list));
+    if (err != BLE_ERROR_NONE) {
+        print_error(err, "Setting service UUID failed");
+        return;
+    }
+
+    uint8_t manufacture_data[4];
+	manufacture_data[0] = 0;	// UUID-HIGH
+	manufacture_data[1] = 0;	// UUID-LOW
+	manufacture_data[2] = 0;	// Counter-HIGH
+	manufacture_data[3] = 0; 	// Counter-LOW
+	err = ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::MANUFACTURER_SPECIFIC_DATA, (uint8_t *)manufacture_data, sizeof(manufacture_data));
+
+	if (err != BLE_ERROR_NONE) {
+		print_error(err, "Setting service data failed MANUFACTURER_SPECIFIC_DATA");
+		return;
+	}
+
+    uint8_t service_data[9];
+    service_data[0] = 0;	// UUID-HIGH
+    service_data[1] = 0;	// UUID-LOW
+    service_data[2] = 0;	// BAT-HIGH
+    service_data[3] = 0; 	// BAT-LOW
+    service_data[4] = 0;	// NTC-HIGH
+	service_data[5] = 0; 	// NTC-LOW
+	service_data[6] = 0;	// LDR-HIGH
+	service_data[7] = 0; 	// LDR-LOW
+	service_data[8] = 0; 	// DOR
+
+    err = ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::SERVICE_DATA, (uint8_t *)service_data, sizeof(service_data));
+    if (err != BLE_ERROR_NONE) {
+		print_error(err, "Setting service data failed SERVICE_DATA");
+		return;
+	}
+
+
+
+    // It is not connectable as we are just boardcasting
+    ble.gap().setAdvertisingType(GapAdvertisingParams::ADV_NON_CONNECTABLE_UNDIRECTED);
+
+    // Send out the advertising payload every 1000ms
+    ble.gap().setAdvertisingInterval(1000);
+
+    err = ble.gap().startAdvertising();
+    if (err != BLE_ERROR_NONE) {
+        print_error(err, "Start advertising failed");
+        return;
+    }
+
+//    printMacAddress();
+}
+
+void scheduleBleEventsProcessing(BLE::OnEventsToProcessCallbackContext* context) {
+    BLE &ble = BLE::Instance();
+    eventQueue.call(Callback<void()>(&ble, &BLE::processEvents));
+}
+
+int main()
+{
+	batData = 0;
+	ntcData = 0;
+	ldrData = 0;
+	dorData = false;
+	cnt = 0;
+
+    BLE &ble = BLE::Instance();
+    ble.onEventsToProcess(scheduleBleEventsProcessing);
+    ble_error_t err = ble.init(bleInitComplete);
+    if (err != BLE_ERROR_NONE) {
+        print_error(err, "BLE initialisation failed");
+        return 0;
+    }
+
+    // Blink LED every 1s to indicate system aliveness
+    eventQueue.call_every(1000, blinkCallback);
+
+    eventQueue.dispatch_forever();
+
+    return 0;
+}

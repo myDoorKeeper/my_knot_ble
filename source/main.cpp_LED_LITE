@@ -1,0 +1,20 @@
+#include <events/mbed_events.h>
+#include <mbed.h>
+#include <math.h>
+
+DigitalOut  led1(p8, 1);
+
+void blinkCallback(void)
+{
+    led1 = !led1;
+}
+
+int main()
+{
+    // Blink LED every 1s to indicate system aliveness
+    eventQueue.call_every(1000, blinkCallback);
+
+    eventQueue.dispatch_forever();
+
+    return 0;
+}
