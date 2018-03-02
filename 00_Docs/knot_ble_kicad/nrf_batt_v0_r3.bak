@@ -31,7 +31,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:nrf_batt_v0_r2-cache
+LIBS:nrf_batt_v0_r3-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -47,10 +47,10 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L vng_nRF51822_test U2
+L vng_nRF51822_test U1
 U 1 1 5A7418F5
 P 5850 3950
-F 0 "U2" V 5900 4000 60  0000 C CNN
+F 0 "U1" V 5900 4000 60  0000 C CNN
 F 1 "vng_nRF51822_test" V 6000 3850 60  0000 C CNN
 F 2 "myLib:MODULE_NRF51822_REV01_1" H 50  4850 60  0001 C CNN
 F 3 "" H 50  4850 60  0001 C CNN
@@ -58,10 +58,10 @@ F 3 "" H 50  4850 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Conn_01x06 J9
+L Conn_01x06 J2
 U 1 1 5A74268B
 P 10550 2050
-F 0 "J9" H 10550 2350 50  0000 C CNN
+F 0 "J2" H 10550 2350 50  0000 C CNN
 F 1 "Conn_DAP" H 10550 1650 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x06_Pitch2.54mm" H 10550 2050 50  0001 C CNN
 F 3 "" H 10550 2050 50  0001 C CNN
@@ -92,19 +92,15 @@ Text GLabel 5700 5150 0    60   Output ~ 0
 GND
 Text GLabel 5250 1200 0    60   Output ~ 0
 VCC_DAP
-Text GLabel 5600 1200 2    60   Input ~ 0
-VCC
-Text GLabel 5050 2500 0    60   Output ~ 0
-VCC
 Text GLabel 7150 3850 2    60   Input ~ 0
 LED01
 Text GLabel 6700 3950 2    60   Input ~ 0
 LED02
 $Comp
-L C_Small C3
+L C_Small C4
 U 1 1 5A745B74
 P 5700 2700
-F 0 "C3" H 5550 2750 50  0000 L CNN
+F 0 "C4" H 5550 2750 50  0000 L CNN
 F 1 "100nF" H 5400 2650 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0805" H 5700 2700 50  0001 C CNN
 F 3 "" H 5700 2700 50  0001 C CNN
@@ -112,17 +108,17 @@ F 3 "" H 5700 2700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C_Small C2
+L C_Small C3
 U 1 1 5A745CF0
 P 5300 2700
-F 0 "C2" H 5150 2750 50  0000 L CNN
+F 0 "C3" H 5150 2750 50  0000 L CNN
 F 1 "1uF" H 5100 2650 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0805" H 5300 2700 50  0001 C CNN
 F 3 "" H 5300 2700 50  0001 C CNN
 	1    5300 2700
 	1    0    0    -1  
 $EndComp
-Text GLabel 5100 2900 0    60   Output ~ 0
+Text GLabel 4400 2900 0    60   Output ~ 0
 GND
 Text GLabel 9150 3800 0    60   Input ~ 0
 A01
@@ -131,7 +127,7 @@ A02
 Text GLabel 10150 4100 0    60   Output ~ 0
 GND
 Text GLabel 10150 4300 0    60   Output ~ 0
-VCC
+VCC_DAP
 Text GLabel 5150 3450 0    60   Output ~ 0
 NTC_READ
 Text GLabel 4550 3550 0    60   Output ~ 0
@@ -156,15 +152,10 @@ Text GLabel 6700 4850 2    60   Output ~ 0
 SWDIO_RST
 NoConn ~ 5250 3250
 NoConn ~ 6600 3550
-NoConn ~ 6600 3650
 NoConn ~ 5250 3850
 NoConn ~ 5250 3950
 NoConn ~ 6600 4050
 NoConn ~ 6600 4150
-NoConn ~ 5250 4450
-NoConn ~ 5250 4550
-NoConn ~ 5250 4650
-NoConn ~ 5250 4750
 $Comp
 L SW_Push SW1
 U 1 1 5A745197
@@ -177,20 +168,16 @@ F 3 "" H 9950 3300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text GLabel 9200 2800 0    60   Output ~ 0
-VCC
+VCC_DAP
 Text GLabel 9300 5650 0    60   Output ~ 0
 LED02
 Text GLabel 9300 5100 0    60   Output ~ 0
 LED01
-Text GLabel 10500 5450 2    60   Output ~ 0
-GND
-Text GLabel 10500 4900 2    60   Output ~ 0
-GND
 $Comp
-L R_Small R3
+L R_Small R7
 U 1 1 5A744FA7
 P 10150 5450
-F 0 "R3" V 10250 5400 50  0000 L CNN
+F 0 "R7" V 10250 5400 50  0000 L CNN
 F 1 "1K" V 10050 5400 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 10150 5450 50  0001 C CNN
 F 3 "" H 10150 5450 50  0001 C CNN
@@ -198,10 +185,10 @@ F 3 "" H 10150 5450 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R_Small R2
+L R_Small R6
 U 1 1 5A744FA1
 P 10150 4900
-F 0 "R2" V 10250 4850 50  0000 L CNN
+F 0 "R6" V 10250 4850 50  0000 L CNN
 F 1 "1K" V 10050 4850 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 10150 4900 50  0001 C CNN
 F 3 "" H 10150 4900 50  0001 C CNN
@@ -235,10 +222,10 @@ SWDIO_RST
 Text GLabel 10400 3100 2    60   Output ~ 0
 GND
 $Comp
-L R_Small R4
+L R_Small R5
 U 1 1 5A742BD5
 P 9450 2800
-F 0 "R4" V 9550 2750 50  0000 L CNN
+F 0 "R5" V 9550 2750 50  0000 L CNN
 F 1 "1K" V 9350 2750 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 9450 2800 50  0001 C CNN
 F 3 "" H 9450 2800 50  0001 C CNN
@@ -246,13 +233,12 @@ F 3 "" H 9450 2800 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 NoConn ~ 6600 4250
-NoConn ~ 6600 3250
 NoConn ~ 6600 3750
 $Comp
-L Conn_01x08 J1
+L Conn_01x08 J3
 U 1 1 5A782D83
 P 10550 4000
-F 0 "J1" H 10550 4400 50  0000 C CNN
+F 0 "J3" H 10550 4400 50  0000 C CNN
 F 1 "Conn_01x08" H 10550 3500 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_2x04_Pitch2.54mm" H 10550 4000 50  0001 C CNN
 F 3 "" H 10550 4000 50  0001 C CNN
@@ -260,61 +246,44 @@ F 3 "" H 10550 4000 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text GLabel 9300 4900 0    60   Output ~ 0
-VCC
+VCC_DAP
 Text GLabel 9300 5450 0    60   Output ~ 0
-VCC
-Text GLabel 1600 2000 0    60   Output ~ 0
-BATT_V
-Text GLabel 2750 2000 2    60   Input ~ 0
+VCC_DAP
+Text GLabel 2850 2300 2    60   Input ~ 0
 BATT_READ
 Text GLabel 5600 1400 2    60   Input ~ 0
 BATT_V
 Text GLabel 5600 1800 2    60   Input ~ 0
 GND
-Text Notes 2650 2300 0    60   ~ 0
-BATTERY_MONITORING\n
-$Comp
-L Q_PMOS_DGS Q1
-U 1 1 5A78691D
-P 2050 5800
-F 0 "Q1" H 2250 5850 50  0000 L CNN
-F 1 "Q_PMOS_DGS" H 2250 5750 50  0000 L CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23" H 2250 5900 50  0001 C CNN
-F 3 "" H 2050 5800 50  0001 C CNN
-	1    2050 5800
-	1    0    0    -1  
-$EndComp
 Text GLabel 4550 3350 0    60   Output ~ 0
 BATT_READ
 $Comp
 L R_Small R1
 U 1 1 5A787091
-P 2150 6200
-F 0 "R1" V 2250 6150 50  0000 L CNN
-F 1 "10K" V 2050 6100 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 2150 6200 50  0001 C CNN
-F 3 "" H 2150 6200 50  0001 C CNN
-	1    2150 6200
+P 2000 5950
+F 0 "R1" V 2100 5900 50  0000 L CNN
+F 1 "100K" V 1900 5850 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805" H 2000 5950 50  0001 C CNN
+F 3 "" H 2000 5950 50  0001 C CNN
+	1    2000 5950
 	-1   0    0    1   
 $EndComp
 $Comp
-L Conn_01x02 J2
+L Conn_01x02 J1
 U 1 1 5A7870FF
-P 2350 6500
-F 0 "J2" H 2350 6600 50  0000 C CNN
-F 1 "Door_Sensor" H 2650 6450 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2350 6500 50  0001 C CNN
-F 3 "" H 2350 6500 50  0001 C CNN
-	1    2350 6500
+P 2200 6250
+F 0 "J1" H 2200 6350 50  0000 C CNN
+F 1 "Door_Sensor" H 2500 6200 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2200 6250 50  0001 C CNN
+F 3 "" H 2200 6250 50  0001 C CNN
+	1    2200 6250
 	1    0    0    -1  
 $EndComp
-Text GLabel 1650 6600 0    60   Output ~ 0
+Text GLabel 1500 6350 0    60   Output ~ 0
 GND
-Text GLabel 1650 5500 0    60   Output ~ 0
-VCC
-Text GLabel 1650 5800 0    60   Input ~ 0
+Text GLabel 2700 6100 2    60   Input ~ 0
 DOOR_READ
-Text Notes 2250 5400 0    60   ~ 0
+Text Notes 2750 5400 0    60   ~ 0
 DOOR SENSOR\n
 Wire Wire Line
 	10100 1850 10350 1850
@@ -349,9 +318,7 @@ Wire Notes Line
 Wire Notes Line
 	8700 2500 8700 1650
 Wire Wire Line
-	5250 1200 5600 1200
-Wire Wire Line
-	5050 2500 5900 2500
+	4400 2500 5900 2500
 Connection ~ 5300 2500
 Wire Wire Line
 	5900 2500 5900 3000
@@ -361,7 +328,7 @@ Wire Wire Line
 Wire Wire Line
 	5700 2600 5700 2500
 Wire Wire Line
-	5100 2900 5700 2900
+	4400 2900 5700 2900
 Wire Wire Line
 	5700 2900 5700 2800
 Wire Wire Line
@@ -404,13 +371,9 @@ Wire Notes Line
 Wire Notes Line
 	10900 4700 8700 4700
 Wire Wire Line
-	10250 5450 10500 5450
-Wire Wire Line
 	9800 5450 10050 5450
 Wire Wire Line
 	9300 5450 9500 5450
-Wire Wire Line
-	10250 4900 10500 4900
 Wire Wire Line
 	9800 4900 10050 4900
 Wire Wire Line
@@ -437,131 +400,95 @@ Wire Wire Line
 	9300 5100 10350 5100
 Wire Wire Line
 	10350 5100 10350 4900
-Connection ~ 10350 4900
 Wire Wire Line
 	9300 5650 10350 5650
 Wire Wire Line
 	10350 5650 10350 5450
-Connection ~ 10350 5450
 Wire Notes Line
 	10900 5750 8700 5750
 Wire Wire Line
 	4800 1400 5600 1400
 Wire Wire Line
 	5400 1400 5400 1200
-Connection ~ 5400 1200
 Connection ~ 5400 1400
 Wire Wire Line
 	4800 1800 5600 1800
 Wire Notes Line
 	4650 1100 6050 1100
-Wire Notes Line
-	950  1800 3650 1800
 Wire Wire Line
 	4550 3350 5250 3350
 Wire Wire Line
-	1650 5500 2150 5500
+	2000 5650 2000 5850
 Wire Wire Line
-	2150 5500 2150 5600
+	2000 6050 2000 6250
 Wire Wire Line
-	1650 5800 1850 5800
-Wire Wire Line
-	2150 6000 2150 6100
-Wire Wire Line
-	2150 6300 2150 6500
-Wire Wire Line
-	1650 6600 2150 6600
+	1500 6350 2000 6350
 Wire Notes Line
-	950  5250 2950 5250
+	950  5250 3650 5250
 Wire Notes Line
-	2950 5250 2950 6700
-Wire Notes Line
-	2950 6700 950  6700
+	950  6700 3650 6700
 Wire Notes Line
 	950  6700 950  5250
-Text GLabel 7400 3450 2    60   Output ~ 0
-DOOR_READ
-Wire Wire Line
-	6600 3450 7400 3450
+Text GLabel 5150 4550 0    60   Input ~ 0
+DOOR_CONTROL
 Text Notes 8750 3650 0    60   ~ 0
 RESERVATION_PINS\n
 Text Notes 10150 2750 0    60   ~ 0
 RESET_BUTTON\n
 Text Notes 8800 1800 0    60   ~ 0
 CMSIS_DAP\n
-Text Notes 8750 4850 0    60   ~ 0
+Text Notes 10600 4850 0    60   ~ 0
 LEDS\n
-NoConn ~ 6600 3350
-Wire Wire Line
-	1600 2000 2750 2000
-Wire Wire Line
-	2150 6400 1800 6400
-Wire Wire Line
-	1800 6400 1800 5800
-Connection ~ 1800 5800
-Connection ~ 2150 6400
 $Comp
-L R_Small R5
+L R_Small R2
 U 1 1 5A93C628
-P 2600 2900
-F 0 "R5" V 2700 2850 50  0000 L CNN
-F 1 "10K" V 2500 2800 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 2600 2900 50  0001 C CNN
-F 3 "" H 2600 2900 50  0001 C CNN
-	1    2600 2900
+P 2600 2450
+F 0 "R2" V 2700 2400 50  0000 L CNN
+F 1 "10K" V 2500 2350 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805" H 2600 2450 50  0001 C CNN
+F 3 "" H 2600 2450 50  0001 C CNN
+	1    2600 2450
 	-1   0    0    1   
 $EndComp
-Text GLabel 1450 3500 0    60   Output ~ 0
+Text GLabel 1450 3050 0    60   Output ~ 0
 GND
-Text GLabel 1450 2700 0    60   Output ~ 0
+Text GLabel 1450 1750 0    60   Output ~ 0
 BATT_V
-Text GLabel 2850 3050 2    60   Input ~ 0
+Text GLabel 2850 2600 2    60   Input ~ 0
 NTC_READ
-Text Notes 3000 2600 0    60   ~ 0
+Text Notes 2950 1600 0    60   ~ 0
 NTC10K_READ\n
 Wire Wire Line
-	2600 2700 2600 2800
+	2600 2250 2600 2350
 Wire Wire Line
-	2600 3000 2600 3100
+	2600 2550 2600 2650
 Wire Wire Line
-	2600 3050 2850 3050
-Connection ~ 2600 3050
+	2600 2600 2850 2600
+Connection ~ 2600 2600
 Wire Wire Line
-	2600 3500 2600 3400
+	2600 3050 2600 2950
 Wire Wire Line
-	1450 3500 2600 3500
+	1450 3050 2600 3050
 Wire Notes Line
-	950  2450 3650 2450
-Wire Wire Line
-	1450 2700 2600 2700
+	950  1450 950  3300
 Wire Notes Line
-	950  2450 950  3750
-Wire Notes Line
-	950  3750 3650 3750
-Wire Notes Line
-	3650 3750 3650 2450
-Wire Notes Line
-	950  1800 950  2350
-Wire Notes Line
-	950  2350 3650 2350
-Wire Notes Line
-	3650 2350 3650 1800
+	950  3300 3650 3300
 $Comp
 L Thermistor_NTC TH1
 U 1 1 5A93BFA5
-P 2600 3250
-F 0 "TH1" V 2425 3250 50  0000 C CNN
-F 1 "Thermistor_NTC" V 2750 3150 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2600 3300 50  0001 C CNN
-F 3 "" H 2600 3300 50  0001 C CNN
-	1    2600 3250
+P 2600 2800
+F 0 "TH1" V 2425 2800 50  0000 C CNN
+F 1 "Thermistor_NTC" V 2750 2700 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2600 2850 50  0001 C CNN
+F 3 "" H 2600 2850 50  0001 C CNN
+	1    2600 2800
 	1    0    0    -1  
 $EndComp
 $Comp
-L R_Small R6
+L R_Small R3
 U 1 1 5A93C3DF
 P 2600 4300
-F 0 "R6" V 2700 4250 50  0000 L CNN
+F 0 "R3" V 2700 4250 50  0000 L CNN
 F 1 "100K" V 2500 4200 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 2600 4300 50  0001 C CNN
 F 3 "" H 2600 4300 50  0001 C CNN
@@ -570,11 +497,11 @@ F 3 "" H 2600 4300 50  0001 C CNN
 $EndComp
 Text GLabel 1450 4900 0    60   Output ~ 0
 GND
-Text GLabel 1450 4100 0    60   Output ~ 0
+Text GLabel 1500 3600 0    60   Output ~ 0
 BATT_V
 Text GLabel 2850 4450 2    60   Input ~ 0
 LDR_READ
-Text Notes 3150 4000 0    60   ~ 0
+Text Notes 3100 3550 0    60   ~ 0
 LDR_READ\n
 Wire Wire Line
 	2600 4100 2600 4200
@@ -588,20 +515,16 @@ Wire Wire Line
 Wire Wire Line
 	1450 4900 2600 4900
 Wire Notes Line
-	950  3850 3650 3850
-Wire Wire Line
-	1450 4100 2600 4100
-Wire Notes Line
-	950  3850 950  5150
+	950  3400 950  5150
 Wire Notes Line
 	950  5150 3650 5150
 Wire Notes Line
-	3650 5150 3650 3850
+	3650 5150 3650 3400
 $Comp
-L LDR03 R7
+L LDR03 R4
 U 1 1 5A93C199
 P 2600 4650
-F 0 "R7" V 2400 4650 50  0000 C CNN
+F 0 "R4" V 2400 4650 50  0000 C CNN
 F 1 "LDR03" V 2675 4650 50  0000 C TNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 2775 4650 50  0001 C CNN
 F 3 "" H 2600 4600 50  0001 C CNN
@@ -622,7 +545,7 @@ U 1 1 5A93DB46
 P 4800 1600
 F 0 "BT1" H 4900 1700 50  0000 L CNN
 F 1 "Battery" H 4900 1600 50  0000 L CNN
-F 2 "Battery_Holders:Keystone_2468_2xAAA" V 4800 1660 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 4800 1660 50  0001 C CNN
 F 3 "" V 4800 1660 50  0001 C CNN
 	1    4800 1600
 	1    0    0    -1  
@@ -649,4 +572,120 @@ Wire Wire Line
 	10150 4300 10350 4300
 Wire Wire Line
 	9150 4400 10350 4400
+Wire Wire Line
+	10350 4900 10250 4900
+Wire Wire Line
+	10350 5450 10250 5450
+Wire Notes Line
+	3650 3300 3650 1450
+Wire Wire Line
+	5400 1200 5250 1200
+Text GLabel 4400 2500 0    60   Output ~ 0
+BATT_V
+$Comp
+L C_Small C2
+U 1 1 5A95110A
+P 5000 2700
+F 0 "C2" H 4850 2750 50  0000 L CNN
+F 1 "100uF" H 4700 2650 50  0000 L CNN
+F 2 "Capacitors_Tantalum_SMD:CP_Tantalum_Case-X_EIA-7343-43_Reflow" H 5000 2700 50  0001 C CNN
+F 3 "" H 5000 2700 50  0001 C CNN
+	1    5000 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C1
+U 1 1 5A951110
+P 4600 2700
+F 0 "C1" H 4450 2750 50  0000 L CNN
+F 1 "100uF" H 4400 2650 50  0000 L CNN
+F 2 "Capacitors_Tantalum_SMD:CP_Tantalum_Case-X_EIA-7343-43_Reflow" H 4600 2700 50  0001 C CNN
+F 3 "" H 4600 2700 50  0001 C CNN
+	1    4600 2700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5000 2600 5000 2500
+Connection ~ 5000 2500
+Wire Wire Line
+	5000 2800 5000 2900
+Connection ~ 5000 2900
+Wire Wire Line
+	4600 2600 4600 2500
+Connection ~ 4600 2500
+Wire Wire Line
+	4600 2800 4600 2900
+Connection ~ 4600 2900
+Wire Wire Line
+	1450 1750 2600 1750
+Wire Wire Line
+	2600 1750 2600 1850
+Text GLabel 1900 2050 0    60   Output ~ 0
+NTC_CONTROL
+Wire Wire Line
+	1900 2050 2300 2050
+Wire Notes Line
+	3650 1450 950  1450
+Wire Wire Line
+	2850 2300 2600 2300
+Connection ~ 2600 2300
+Text GLabel 1800 3900 0    60   Output ~ 0
+LDR_CONTROL
+Wire Wire Line
+	1500 3600 2600 3600
+Wire Wire Line
+	2600 3600 2600 3700
+Wire Notes Line
+	3650 3400 950  3400
+Wire Notes Line
+	3650 6700 3650 5250
+Text GLabel 1900 5650 0    60   Output ~ 0
+DOOR_CONTROL
+Wire Wire Line
+	1900 5650 2000 5650
+Wire Wire Line
+	2700 6100 2000 6100
+Connection ~ 2000 6100
+Text GLabel 5150 4750 0    60   Input ~ 0
+LDR_CONTROL
+Text GLabel 4400 4650 0    60   Input ~ 0
+NTC_CONTROL
+Text GLabel 4300 4450 0    60   Output ~ 0
+DOOR_READ
+Wire Wire Line
+	2300 3900 1800 3900
+Wire Wire Line
+	4300 4450 5250 4450
+NoConn ~ 6600 3650
+Wire Wire Line
+	5150 4550 5250 4550
+Wire Wire Line
+	4400 4650 5250 4650
+Wire Wire Line
+	5150 4750 5250 4750
+NoConn ~ 6600 3250
+NoConn ~ 6600 3350
+NoConn ~ 6600 3450
+$Comp
+L Q_PMOS_GSD Q2
+U 1 1 5A979FFA
+P 2500 3900
+F 0 "Q2" H 2700 3950 50  0000 L CNN
+F 1 "Q_PMOS_GSD" H 2700 3850 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SuperSOT-3" H 2700 4000 50  0001 C CNN
+F 3 "" H 2500 3900 50  0001 C CNN
+	1    2500 3900
+	1    0    0    1   
+$EndComp
+$Comp
+L Q_PMOS_GSD Q1
+U 1 1 5A97A11A
+P 2500 2050
+F 0 "Q1" H 2700 2100 50  0000 L CNN
+F 1 "Q_PMOS_GSD" H 2700 2000 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SuperSOT-3" H 2700 2150 50  0001 C CNN
+F 3 "" H 2500 2050 50  0001 C CNN
+	1    2500 2050
+	1    0    0    1   
+$EndComp
 $EndSCHEMATC

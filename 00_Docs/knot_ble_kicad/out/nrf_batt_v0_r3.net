@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source "C:/Users/PC/Documents/OneDrive - Inspectorio, Inc/10_IoTPrj/myDoorKeeper/my_knot_ble/00_Docs/knot_ble_kicad/nrf_batt_v0_r3.sch")
-    (date "3/1/2018 1:34:24 PM")
+    (date "3/1/2018 2:03:44 PM")
     (tool "Eeschema 4.0.7")
     (sheet (number 1) (name /) (tstamps /)
       (title_block

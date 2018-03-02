@@ -1,4 +1,4 @@
-update=2/26/2018 4:44:17 PM
+update=3/1/2018 10:00:45 AM
 version=1
 last_client=pcbnew
 [general]
@@ -44,20 +44,10 @@ LibName29=opto
 LibName30=atmel
 LibName31=contrib
 LibName32=valves
-[schematic_editor]
-version=1
-PageLayoutDescrFile=
-PlotDirectoryName=
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
-LabSize=60
 [pcbnew]
 version=1
 PageLayoutDescrFile=
-LastNetListRead=out/nrf_batt_v0_r2.net
+LastNetListRead=out/nrf_batt_v0_r3.net
 PadDrill=0.6
 PadDrillOvalY=0.6
 PadSizeH=1.5
